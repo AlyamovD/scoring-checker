@@ -1,0 +1,33 @@
+@import "../../scss/variables.scss";
+
+.langSwitcher {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  background: $color-grey-1;
+  &__button {
+    cursor: pointer;
+    padding: 8px 14px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 0.875rem;
+    color: $color-grey-4;
+    transition: 100ms linear;
+    &:hover {
+      background: darken($color-grey-1, 5%);
+    }
+    &:active {
+      background: darken($color-grey-1, 8%);
+    }
+    &.active {
+      background: $color-primary;
+      color: $color-white;
+    }
+  }
+}

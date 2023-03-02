@@ -1,0 +1,26 @@
+/**** colors ****/
+$color-white: #ffffff;
+$color-grey-1: #f2f2f2;
+$color-grey-2: #d2d2d2;
+$color-grey-3: #8a8a8a;
+$color-grey-4: #313131;
+$color-primary: #5f8fc7;
+
+/**** border radius ****/
+$radius-1: 4px;
+$radius-max: 10000px;
+
+/**** border radius ****/
+@mixin shadow-1 {
+	box-shadow: 0px 4px 13px rgba(0, 0, 0, 0.03);
+}
+
+@mixin shadow-2 {
+	box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/**** container ****/
+@mixin container {
+	width: 800px;
+	margin: 0 auto;
+}

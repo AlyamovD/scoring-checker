@@ -1,0 +1,114 @@
+@import "../../scss/variables.scss";
+
+.field {
+  @include shadow-1;
+  width: 100%;
+  padding: 20px 25px;
+  border-radius: 4px;
+  background: $color-white;
+  border: 2px solid transparent;
+  border-left: 5px solid $color-grey-4;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  &__title {
+    font-size: 1.125rem;
+    color: $color-grey-4;
+  }
+  &__closeButton {
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-grey-3;
+    transition: 50ms linear;
+    &:hover {
+      background: $color-grey-1;
+    }
+    &:active {
+      background: darken($color-grey-1, 5%);
+    }
+  }
+}
+
+.fieldShort {
+  @include shadow-1;
+  cursor: pointer;
+  position: relative;
+  padding: 20px 25px;
+  background: $color-white;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  border: 2px solid transparent;
+  transition: 100ms linear;
+  &__title {
+    font-size: 1.125rem;
+    color: $color-grey-4;
+  }
+  &__tags {
+    display: flex;
+    gap: 5px 40px;
+    flex-wrap: wrap;
+  }
+  &__tag {
+    display: flex;
+    gap: 5px;
+  }
+  &__tagKey {
+    color: $color-grey-4;
+    font-size: 0.875rem;
+  }
+  &__tagValue {
+    color: $color-grey-3;
+    font-size: 0.875rem;
+  }
+  &__deleteButton {
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+    color: $color-grey-3;
+    transition: 50ms linear;
+    &:hover {
+      background: $color-grey-1;
+    }
+    &:active {
+      background: darken($color-grey-1, 5%);
+    }
+  }
+  &__dropdown {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    span {
+      font-size: 0.875rem;
+      color: $color-grey-4;
+    }
+  }
+  &__checklist {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    span {
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: $color-grey-4;
+    }
+    .icon {
+      color: $color-grey-2;
+    }
+  }
+  &:hover {
+    border-color: $color-grey-2;
+  }
+  &:active {
+    border-color: $color-primary;
+  }
+}
