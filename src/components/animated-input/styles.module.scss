@@ -1,0 +1,70 @@
+@import "../../scss/variables.scss";
+
+.animatedInput {
+  position: relative;
+  .input {
+    height: 56px;
+    border-radius: 4px;
+    background: $color-grey-1;
+    padding: 0 20px;
+    width: 100%;
+    border: 2px solid transparent;
+    transition: 80ms linear;
+    font-size: 1rem;
+    font-weight: 600;
+    color: $color-grey-4;
+    &:not(:placeholder-shown),
+    &:focus {
+      border-color: $color-grey-2;
+      background: $color-white;
+      & ~ .placeholder {
+        font-size: 0.75rem;
+        top: -7px;
+        background: $color-white;
+        font-weight: 600;
+      }
+    }
+    &:not(:placeholder-shown) {
+      & ~ .placeholder {
+        color: $color-grey-3;
+      }
+    }
+    &:hover {
+      border-color: $color-grey-3;
+    }
+    &:focus {
+      border-color: $color-primary;
+      & ~ .placeholder {
+        color: $color-primary;
+      }
+    }
+  }
+  .placeholder {
+    position: absolute;
+    top: 18px;
+    left: 16px;
+    padding: 0 4px;
+    font-size: 1rem;
+    color: $color-grey-3;
+    transition: 80ms linear;
+    pointer-events: none;
+  }
+}
+
+.small.animatedInput {
+  .input {
+    height: 40px;
+    font-size: 0.875rem;
+    &:not(:placeholder-shown),
+    &:focus {
+      & ~ .placeholder {
+        font-size: 0.675rem;
+        top: -5px;
+      }
+    }
+  }
+  .placeholder {
+    top: 10px;
+		font-size: 0.875rem;
+  }
+}

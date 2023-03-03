@@ -15,9 +15,13 @@
     font-size: 1.125rem;
     color: $color-grey-4;
     border: 2px solid transparent;
-    transition: 100ms linear;
-    &:hover {
+    transition: 80ms linear;
+    &.active{
+      background: $color-white;
       border-color: $color-grey-2;
+    }
+    &:hover {
+      border-color: $color-grey-3;
     }
     &:focus {
       border-color: $color-primary;

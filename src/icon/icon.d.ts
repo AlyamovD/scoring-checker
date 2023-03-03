@@ -2,6 +2,7 @@ declare namespace DIcon {
   interface svgList {
     radioButtonUnchecked: React.ReactNode;
     radioButtonChecked: React.ReactNode;
+    dot: React.ReactNode;
     arrowBack: React.ReactNode;
     checkBoxOutlineBlank: React.ReactNode;
     checkBox: React.ReactNode;

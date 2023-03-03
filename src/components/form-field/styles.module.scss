@@ -14,6 +14,9 @@
   &__title {
     font-size: 1.125rem;
     color: $color-grey-4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   &__closeButton {
     cursor: pointer;
@@ -30,6 +33,76 @@
     }
     &:active {
       background: darken($color-grey-1, 5%);
+    }
+  }
+  &__tools {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__requiredButton {
+    cursor: pointer;
+    padding: 8px 14px;
+    border-radius: 4px;
+    transition: 100ms linear;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: $color-grey-4;
+    font-weight: 500;
+    text-align: left;
+    white-space: nowrap;
+    svg {
+      color: $color-grey-3;
+    }
+    &:hover {
+      background: $color-grey-1;
+    }
+    &:active {
+      background: darken($color-grey-1, 5%);
+    }
+    &.active {
+      svg {
+        color: $color-grey-4;
+      }
+    }
+  }
+  &__options {
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  &__option {
+    display: grid;
+    grid-template-columns: 212px 212px 1fr 1fr;
+    gap: 10px;
+    .field__closeButton {
+      width: 40px;
+      height: 40px;
+    }
+    .field__requiredButton {
+      padding: 0 14px;
+    }
+  }
+  &__optionAddButton {
+    cursor: pointer;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    border: 1px dotted $color-grey-3;
+    width: 212px;
+    color: $color-grey-3;
+    transition: 80ms linear;
+    &:hover {
+      border-color: $color-grey-4;
+      color: $color-grey-4;
+    }
+    &:active {
+      background: $color-grey-1;
     }
   }
 }
@@ -49,6 +122,14 @@
   &__title {
     font-size: 1.125rem;
     color: $color-grey-4;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    span {
+      color: rgb(208, 73, 73);
+      display: inline-block;
+      font-size: 0.875rem;
+    }
   }
   &__tags {
     display: flex;
@@ -69,7 +150,7 @@
   }
   &__deleteButton {
     cursor: pointer;
-    width: 50px;
+    min-width: 50px;
     height: 50px;
     border-radius: 4px;
     color: $color-grey-3;
@@ -79,15 +160,6 @@
     }
     &:active {
       background: darken($color-grey-1, 5%);
-    }
-  }
-  &__dropdown {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    span {
-      font-size: 0.875rem;
-      color: $color-grey-4;
     }
   }
   &__checklist {

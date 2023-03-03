@@ -13,6 +13,8 @@ const transcript = {
           return "Несколько из списка";
         case "text_number":
           return "Текст (число)";
+        case "text_float":
+          return "Текст (число c плавающей точкой)";
         case "text_string":
           return "Текст (строка)";
         default:
@@ -27,6 +29,8 @@ const transcript = {
           return "radioButtonChecked";
         case "several_of_list":
           return "checkBox";
+        case "text_float":
+          return "shortText";
         case "text_number":
           return "shortText";
         case "text_string":

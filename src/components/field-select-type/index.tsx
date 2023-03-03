@@ -49,6 +49,10 @@ const FieldSelectType: React.FC<IProps> = ({ field }) => {
             <Icon size={20} name="shortText" />
             {transcript.fieldType.keyToText("text_number")}
           </button>
+          <button className={styles.select__option} onClick={() => handleSelect("text_float")}>
+            <Icon size={20} name="shortText" />
+            {transcript.fieldType.keyToText("text_float")}
+          </button>
           <button className={styles.select__option} onClick={() => handleSelect("dropdown")}>
             <Icon size={20} name="dropdown" />
             {transcript.fieldType.keyToText("dropdown")}

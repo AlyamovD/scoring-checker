@@ -21,3 +21,16 @@
     color: $color-primary;
   }
 }
+
+.importJSON {
+  cursor: pointer;
+  text-align: center;
+  color: $color-grey-3;
+  font-size: 0.875rem;
+  &:hover {
+    text-decoration: underline;
+  }
+  input {
+    display: none;
+  }
+}

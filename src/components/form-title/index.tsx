@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React from "react";
 
 import { useDispatch } from "store/hooks";
@@ -23,7 +24,7 @@ const FormTitle = ({ form }: { form: IForm }) => {
       <input
         value={form.title[form.lang]}
         type="text"
-        className={styles.formTitle__input}
+        className={classNames(styles.formTitle__input, form.title[form.lang].trim() !== "" && styles.active)}
         onChange={handleChangeTitle}
       />
     </div>

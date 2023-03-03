@@ -2,7 +2,13 @@ import { createModel } from "@rematch/core";
 import { IRootModel } from ".";
 import { v4 as uuid } from "uuid";
 
-export type TFiledType = "text_string" | "text_number" | "dropdown" | "one_of_list" | "several_of_list";
+export type TFiledType =
+  | "text_float"
+  | "text_string"
+  | "text_number"
+  | "dropdown"
+  | "one_of_list"
+  | "several_of_list";
 
 export type TLang = "ru" | "en";
 
@@ -28,6 +34,7 @@ export interface IField {
   max_value: string;
   required: boolean;
   options: {
+    id: string;
     title: {
       ru: string;
       en: string;
@@ -69,7 +76,17 @@ const getNewEmptyField = (): IField => ({
     ru: "",
     en: "",
   },
-  options: [],
+  options: [
+    {
+      id: uuid(),
+      bd_name: "",
+      title: {
+        ru: "",
+        en: "",
+      },
+      initial: true,
+    },
+  ],
 });
 
 const getNewEmptyForm = (): IForm => ({
@@ -125,13 +142,19 @@ const forms = createModel<IRootModel>()({
             ? [...form.fields.map((field) => ({ ...field, opened: false })), getNewEmptyField()]
             : form.fields,
       })),
-    UPDATE_FIELD: (state, updatedfield: IField | undefined) => {
-      console.log(updatedfield);
-      return state.map((form) => ({
+    INSERT_EXIST_FIELD: (state, formId, field) =>
+      state.map((form) => ({
+        ...form,
+        fields:
+          form.id === formId
+            ? [...form.fields.map((field) => ({ ...field, opened: false })), field]
+            : form.fields,
+      })),
+    UPDATE_FIELD: (state, updatedfield: IField | undefined) =>
+      state.map((form) => ({
         ...form,
         fields: form.fields.map((field) => (field.id === updatedfield?.id ? updatedfield : field)),
-      }));
-    },
+      })),
   },
   effects: (dispatch) => ({
     async CREATE() {
