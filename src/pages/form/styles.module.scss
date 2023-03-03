@@ -51,10 +51,138 @@
   }
 }
 
+.tools {
+  width: 100%;
+  background: $color-grey-1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  &.sticky {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+}
+
 .container {
   @include container;
   display: flex;
   flex-direction: column;
   gap: 20px;
   padding: 50px 0;
+}
+
+.flex {
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.grid2 {
+  padding-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 24px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  &__title {
+    font-size: $color-grey-4;
+    font-size: 0.875rem;
+  }
+  &__input {
+    background: $color-white;
+    border-radius: 4px;
+    width: 100%;
+    height: 48px;
+    padding: 0 14px;
+    font-size: 0.875rem;
+    &::placeholder {
+      color: $color-grey-3;
+      font-size: 0.875rem;
+    }
+  }
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    height: 48px;
+  }
+  &__listItem {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: $color-grey-4;
+    font-size: 0.875rem;
+    cursor: pointer;
+    svg {
+      transition: 100ms linear;
+      color: $color-grey-3;
+    }
+    &.active {
+      svg {
+        color: $color-primary;
+      }
+    }
+  }
+  &__dropdown {
+    position: relative;
+    &.opened {
+      .field__dropdownArrow {
+        transform: rotateZ(180deg);
+      }
+    }
+  }
+  &__dropdownLabel {
+    cursor: pointer;
+    width: 100%;
+    background: $color-white;
+    border-radius: 4px;
+    height: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 14px;
+    font-size: 0.875rem;
+  }
+  &__dropdownInitText {
+    color: $color-grey-3;
+    font-size: 0.875rem;
+  }
+  &__dropdownArrow {
+    transition: 100ms linear;
+  }
+  &__dropdownMenu {
+    @include shadow-2;
+    background: $color-white;
+    padding: 8px;
+    border-radius: 4px;
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    width: 100%;
+  }
+  &__dropdownItem {
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    transition: 100ms linear;
+    &:hover {
+      background: $color-grey-1;
+    }
+    &:active {
+      background: darken($color-grey-1, 5%);
+    }
+  }
+  &__description {
+    color: $color-grey-3;
+    font-size: 0.75rem;
+  }
 }

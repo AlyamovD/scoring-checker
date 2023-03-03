@@ -1,7 +1,6 @@
 import React from "react";
 import classNames from "classnames";
 
-import Icon from "icon";
 import { useDispatch } from "store/hooks";
 import { IForm, TLang } from "store/models/forms";
 import styles from "./styles.module.scss";

@@ -10,8 +10,12 @@ import { useDispatch } from "store/hooks";
 import styles from "./styles.module.scss";
 import classNames from "classnames";
 
-const FormField = ({ form, field, index }: { form: IForm; field: IField; index: number }) => {
+const FormField = (props: { form: IForm; field: IField; index: number }) => {
   const dispatch = useDispatch();
+
+  const [field, setField] = React.useState(props.field);
+
+  const fieldTypeIs = (...args: TFiledType[]): boolean => !!args.find((type) => field.type === type);
 
   const handleRemoveField = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -29,109 +33,113 @@ const FormField = ({ form, field, index }: { form: IForm; field: IField; index: 
   };
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch.forms.UPDATE_FIELD({
-      ...field,
+    setField((prev) => ({
+      ...prev,
       title: {
-        ...field.title,
-        [form.lang]: e.target.value,
+        ...prev.title,
+        [props.form.lang]: e.target.value,
       },
-    });
+    }));
   };
 
   const handleChangeBdName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch.forms.UPDATE_FIELD({
-      ...field,
+    setField((prev) => ({
+      ...prev,
       bd_name: e.target.value,
-    });
+    }));
   };
 
   const handleChangePlaceholder = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch.forms.UPDATE_FIELD({
-      ...field,
+    setField((prev) => ({
+      ...prev,
       placeholder: {
-        ...field.placeholder,
-        [form.lang]: e.target.value,
+        ...prev.placeholder,
+        [props.form.lang]: e.target.value,
       },
-    });
+    }));
   };
 
   const handleChangeSymbolLimit = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch.forms.UPDATE_FIELD({
-      ...field,
+    setField((prev) => ({
+      ...prev,
       symbol_limit: e.target.value,
-    });
+    }));
   };
 
   const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch.forms.UPDATE_FIELD({
-      ...field,
+    setField((prev) => ({
+      ...prev,
       description: {
-        ...field.description,
-        [form.lang]: e.target.value,
+        ...prev.description,
+        [props.form.lang]: e.target.value,
       },
-    });
+    }));
   };
 
   const handleChangeMinValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch.forms.UPDATE_FIELD({
-      ...field,
+    setField((prev) => ({
+      ...prev,
       min_value: e.target.value,
-    });
+    }));
   };
 
   const handleChangeMaxValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch.forms.UPDATE_FIELD({
-      ...field,
+    setField((prev) => ({
+      ...prev,
       max_value: e.target.value,
-    });
+    }));
   };
 
   const handleToggleRequired = () => {
-    dispatch.forms.UPDATE_FIELD({
-      ...field,
-      required: !field.required,
-    });
+    setField((prev) => ({
+      ...prev,
+      required: !prev.required,
+    }));
   };
 
   const handleChangeInitialOption = (id: string) => {
-    dispatch.forms.UPDATE_FIELD({
-      ...field,
-      options: field.options.map((option) =>
-        option.id === id ? { ...option, initial: !option.initial } : { ...option, initial: false }
+    setField((prev) => ({
+      ...prev,
+      options: prev.options.map((option) =>
+        option.id === id
+          ? { ...option, initial: !option.initial }
+          : { ...option, initial: field.type === "several_of_list" ? option.initial : false }
       ),
-    });
+    }));
   };
 
   const handleRemoveOption = (id: string) => {
-    dispatch.forms.UPDATE_FIELD({
-      ...field,
-      options: field.options.filter((option) => option.id !== id),
-    });
+    setField((prev) => ({
+      ...prev,
+      options: prev.options.filter((option) => option.id !== id),
+    }));
   };
 
   const handleChangeOptionTitle = (id: string, e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch.forms.UPDATE_FIELD({
-      ...field,
-      options: field.options.map((option) =>
-        option.id === id ? { ...option, title: { ...option.title, [form.lang]: e.target.value } } : option
+    setField((prev) => ({
+      ...prev,
+      options: prev.options.map((option) =>
+        option.id === id
+          ? { ...option, title: { ...option.title, [props.form.lang]: e.target.value } }
+          : option
       ),
-    });
+    }));
   };
 
   const handleChangeOptionBdName = (id: string, e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch.forms.UPDATE_FIELD({
-      ...field,
-      options: field.options.map((option) =>
+    setField((prev) => ({
+      ...prev,
+      options: prev.options.map((option) =>
         option.id === id ? { ...option, bd_name: e.target.value } : option
       ),
-    });
+    }));
   };
 
   const handleAddOption = () => {
-    dispatch.forms.UPDATE_FIELD({
-      ...field,
+    setField((prev) => ({
+      ...prev,
       options: [
-        ...field.options,
+        ...prev.options,
         {
           id: uuid(),
           bd_name: "",
@@ -142,39 +150,45 @@ const FormField = ({ form, field, index }: { form: IForm; field: IField; index: 
           },
         },
       ],
-    });
+    }));
   };
 
-  const fieldTypeIs = (...args: TFiledType[]): boolean => !!args.find((type) => field.type === type);
+  React.useEffect(() => {
+    dispatch.forms.UPDATE_FIELD(field);
+  }, [dispatch.forms, field]);
+
+  React.useEffect(() => {
+    setField(props.field);
+  }, [props.field]);
 
   if (field.opened)
     return (
       <div className={styles.field}>
         <div className={styles.field__title}>
-          Поле {index + 1}
+          Поле {props.index + 1}
           <button className={styles.field__closeButton} onClick={handleCloseField}>
             <Icon name="close" />
           </button>
         </div>
         <FieldSelectType field={field} />
         <AnimatedInput onChange={handleChangeTitle} placeholder="Название поля">
-          {field.title[form.lang]}
+          {field.title[props.form.lang]}
         </AnimatedInput>
         <AnimatedInput onChange={handleChangeBdName} placeholder="Столбец в базе данных">
           {field.bd_name}
         </AnimatedInput>
         {fieldTypeIs("dropdown", "text_number", "text_float", "text_string") && (
           <AnimatedInput onChange={handleChangePlaceholder} placeholder="Заполнитель">
-            {field.placeholder[form.lang]}
+            {field.placeholder[props.form.lang]}
           </AnimatedInput>
         )}
         {fieldTypeIs("text_number", "text_float", "text_string") && (
-          <AnimatedInput onChange={handleChangeSymbolLimit} placeholder="Максимум символов">
+          <AnimatedInput type="number" onChange={handleChangeSymbolLimit} placeholder="Максимум символов">
             {field.symbol_limit}
           </AnimatedInput>
         )}
         <AnimatedInput onChange={handleChangeDescription} placeholder="Описание">
-          {field.description[form.lang]}
+          {field.description[props.form.lang]}
         </AnimatedInput>
         {fieldTypeIs("text_float", "text_number") && (
           <AnimatedInput type="number" onChange={handleChangeMinValue} placeholder="Мин. значение">
@@ -195,7 +209,7 @@ const FormField = ({ form, field, index }: { form: IForm; field: IField; index: 
                   onChange={(e) => handleChangeOptionTitle(option.id, e)}
                   placeholder={`Вариант ${index + 1}`}
                 >
-                  {option.title[form.lang]}
+                  {option.title[props.form.lang]}
                 </AnimatedInput>
                 <AnimatedInput
                   small
@@ -208,7 +222,11 @@ const FormField = ({ form, field, index }: { form: IForm; field: IField; index: 
                   className={classNames(styles.field__requiredButton, option.initial && styles.active)}
                   onClick={() => handleChangeInitialOption(option.id)}
                 >
-                  <Icon name={option.initial ? "radioButtonChecked" : "radioButtonUnchecked"} size={20} />
+                  {field.type === "several_of_list" ? (
+                    <Icon name={option.initial ? "checkBox" : "checkBoxOutlineBlank"} size={20} />
+                  ) : (
+                    <Icon name={option.initial ? "radioButtonChecked" : "radioButtonUnchecked"} size={20} />
+                  )}
                   По умолчанию
                 </button>
                 <button
@@ -243,7 +261,7 @@ const FormField = ({ form, field, index }: { form: IForm; field: IField; index: 
     <div className={styles.fieldShort} onClick={handleOpenField}>
       <div className="flex column gap-15">
         <div className={styles.fieldShort__title}>
-          {field.title[form.lang]}
+          {field.title[props.form.lang]}
           {field.required && <span>обязательный</span>}
         </div>
         <div className={styles.fieldShort__tags}>
@@ -257,22 +275,23 @@ const FormField = ({ form, field, index }: { form: IForm; field: IField; index: 
               <div className={styles.fieldShort__tagValue}>{field.bd_name}</div>
             </div>
           )}
-          {fieldTypeIs("dropdown", "text_number", "text_string") && field.placeholder[form.lang] !== "" && (
-            <div className={styles.fieldShort__tag}>
-              <div className={styles.fieldShort__tagKey}>Заполнитель:</div>
-              <div className={styles.fieldShort__tagValue}>{field.placeholder[form.lang]}</div>
-            </div>
-          )}
+          {fieldTypeIs("dropdown", "text_number", "text_string") &&
+            field.placeholder[props.form.lang] !== "" && (
+              <div className={styles.fieldShort__tag}>
+                <div className={styles.fieldShort__tagKey}>Заполнитель:</div>
+                <div className={styles.fieldShort__tagValue}>{field.placeholder[props.form.lang]}</div>
+              </div>
+            )}
           {fieldTypeIs("text_number", "text_string") && field.symbol_limit !== "" && (
             <div className={styles.fieldShort__tag}>
               <div className={styles.fieldShort__tagKey}>Максимум символов:</div>
               <div className={styles.fieldShort__tagValue}>{field.symbol_limit}</div>
             </div>
           )}
-          {field.description[form.lang] !== "" && (
+          {field.description[props.form.lang] !== "" && (
             <div className={styles.fieldShort__tag}>
               <div className={styles.fieldShort__tagKey}>Описание:</div>
-              <div className={styles.fieldShort__tagValue}>{field.description[form.lang]}</div>
+              <div className={styles.fieldShort__tagValue}>{field.description[props.form.lang]}</div>
             </div>
           )}
           {fieldTypeIs("text_number") && field.min_value !== "" && (
@@ -303,7 +322,7 @@ const FormField = ({ form, field, index }: { form: IForm; field: IField; index: 
                   size={20}
                   className={styles.icon}
                 />
-                {option.title[form.lang]}
+                {option.title[props.form.lang]}
               </span>
             ))}
           </div>

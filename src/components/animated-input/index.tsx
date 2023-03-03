@@ -19,6 +19,8 @@ const AnimatedInput: React.FC<IProps> = ({ children, onChange, placeholder, type
     onChange(e);
   };
 
+  React.useEffect(() => setValue(children), [children]);
+
   return (
     <div className={classNames(styles.animatedInput, small && styles.small)}>
       <input

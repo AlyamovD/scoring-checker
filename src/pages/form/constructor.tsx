@@ -6,6 +6,8 @@ import LangSwitcher from "components/lang-switcher";
 import FormTitle from "components/form-title";
 import { useSelector } from "store/hooks";
 import { IForm } from "store/models/forms";
+import styles from "./styles.module.scss";
+import classNames from 'classnames';
 
 const FormConstructor = () => {
   const { id } = useParams();
@@ -19,7 +21,9 @@ const FormConstructor = () => {
   return (
     <>
       <FormTitle form={form} />
-      <LangSwitcher form={form} />
+      <div className={classNames(styles.tools, styles.sticky)}>
+        <LangSwitcher form={form} />
+      </div>
       <FormFields form={form} />
     </>
   );

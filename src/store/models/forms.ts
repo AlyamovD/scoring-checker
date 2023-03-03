@@ -12,6 +12,8 @@ export type TFiledType =
 
 export type TLang = "ru" | "en";
 
+export type TColumnCount = 1 | 2;
+
 export interface IField {
   id: string;
   type: TFiledType;
@@ -51,7 +53,7 @@ export interface IForm {
     en: string;
   };
   lang: TLang;
-  column_number: 1 | 2;
+  column_number: TColumnCount;
   fields: IField[];
 }
 
@@ -110,7 +112,7 @@ const forms = createModel<IRootModel>()({
     RESET: () => [],
     DELETE_FIELD: (state, id) =>
       state.map((form) => ({ ...form, fields: form.fields.filter((field) => field.id !== id) })),
-    OPEN_FIELD: (state, id) =>
+    OPEN_FIELD: (state, id) => 
       state.map((form) => ({
         ...form,
         fields: form.fields.map((field) => ({
