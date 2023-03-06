@@ -90,7 +90,7 @@ const getNewEmptyField = (): IField => ({
 
 const getNewEmptyForm = (): IForm => ({
   id: uuid(),
-  title: "",
+  title: "New Form",
   lang: "ru",
   column_number: 1,
   fields: [getNewEmptyField()],
