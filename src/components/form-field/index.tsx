@@ -1,5 +1,6 @@
 import React from "react";
 import { v4 as uuid } from "uuid";
+import classNames from "classnames";
 
 import Icon from "icon";
 import FieldSelectType from "components/field-select-type";
@@ -8,7 +9,6 @@ import transcript from "utils/transcript";
 import { IField, TLang, TFiledType } from "store/models/forms";
 import { useDispatch } from "store/hooks";
 import styles from "./styles.module.scss";
-import classNames from "classnames";
 
 const FormField = (props: { lang: TLang; field: IField; index: number }) => {
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ const FormField = (props: { lang: TLang; field: IField; index: number }) => {
     e.stopPropagation();
     setField((prev) => ({
       ...prev,
-      opened: true,
+      opened: false,
     }));
   };
 
@@ -175,7 +175,7 @@ const FormField = (props: { lang: TLang; field: IField; index: number }) => {
             <Icon name="close" />
           </button>
         </div>
-        <FieldSelectType field={field} />
+        <FieldSelectType field={field} setField={setField} />
         <AnimatedInput onChange={handleChangeTitle} placeholder="Название поля">
           {field.title[props.lang]}
         </AnimatedInput>

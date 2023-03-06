@@ -34,3 +34,31 @@
     display: none;
   }
 }
+
+.field {
+  margin-bottom: 20px;
+  position: relative;
+  .dragButton {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: calc(100% + 5px);
+    top: 50%;
+    transform: translateY(-50%);
+    transition: 100ms linear;
+    color: $color-grey-3;
+    &:hover {
+      background: lighten($color-grey-2, 7%);
+    }
+    &:active {
+      background: $color-grey-2;
+    }
+  }
+  &:last-child() {
+    margin-bottom: 0;
+  }
+}

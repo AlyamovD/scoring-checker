@@ -4,19 +4,18 @@ import classNames from "classnames";
 import Icon from "icon";
 import transcript from "utils/transcript";
 import { IField, TFiledType } from "store/models/forms";
-import { useDispatch } from "store/hooks";
 import styles from "./styles.module.scss";
 
 interface IProps {
   field: IField;
+  setField: React.Dispatch<React.SetStateAction<IField>>;
 }
-const FieldSelectType: React.FC<IProps> = ({ field }) => {
-  const dispatch = useDispatch();
+const FieldSelectType: React.FC<IProps> = ({ field, setField }) => {
   const [opened, setOpened] = React.useState(false);
 
   const handleSelect = (type: TFiledType) => {
     setOpened(false);
-    dispatch.forms.UPDATE_FIELD({
+    setField({
       ...field,
       type,
     });

@@ -1,5 +1,6 @@
 import React from "react";
 import { v4 as uuid } from "uuid";
+import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd";
 
 import Icon from "icon";
 import { useDispatch } from "store/hooks";
@@ -7,42 +8,47 @@ import { IForm, IField } from "store/models/forms";
 import FormField from "../form-field";
 import styles from "./styles.module.scss";
 
+let debounceTimeout: NodeJS.Timeout;
 const FormFields = ({ form }: { form: IForm }) => {
   const dispatch = useDispatch();
 
-  const getNewEmptyField = (obj: Partial<IField>): IField => ({
-    id: uuid(),
-    opened: true,
-    type: "text_string",
-    title: {
-      ru: "",
-      en: "",
-    },
-    bd_name: obj.bd_name ?? "",
-    placeholder: {
-      ru: "",
-      en: "",
-    },
-    required: obj.required ?? false,
-    symbol_limit: "",
-    min_value: obj.min_value ?? "",
-    max_value: obj.max_value ?? "",
-    description: {
-      ru: "",
-      en: "",
-    },
-    options: obj.options ?? [
-      {
-        id: uuid(),
-        bd_name: "",
-        title: {
-          ru: "",
-          en: "",
-        },
-        initial: true,
+  const [fields, updateFields] = React.useState(form.fields);
+
+  const getNewEmptyField = (obj: Partial<IField>): IField => {
+    return {
+      id: uuid(),
+      opened: true,
+      type: obj.type ?? "text_string",
+      title: {
+        ru: "",
+        en: "",
       },
-    ],
-  });
+      bd_name: obj.bd_name ?? "",
+      placeholder: {
+        ru: "",
+        en: "",
+      },
+      required: obj.required ?? false,
+      symbol_limit: "",
+      min_value: obj.min_value ?? "",
+      max_value: obj.max_value ?? "",
+      description: {
+        ru: "",
+        en: "",
+      },
+      options: obj.options ?? [
+        {
+          id: uuid(),
+          bd_name: "",
+          title: {
+            ru: "",
+            en: "",
+          },
+          initial: true,
+        },
+      ],
+    };
+  };
 
   const handleAddField = () => {
     if (!form) return;
@@ -100,11 +106,52 @@ const FormFields = ({ form }: { form: IForm }) => {
   //   return () => window.removeEventListener("mousedown", handleMouseDown);
   // }, [dispatch.forms]);
 
+  const handleOnDragEnd = (result: DropResult) => {
+    if (!result.destination) return;
+    const items = Array.from(fields);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    clearTimeout(debounceTimeout);
+    debounceTimeout = setTimeout(() => {
+      dispatch.forms.UPDATE({
+        ...form,
+        fields: items,
+      });
+    }, 200);
+
+    updateFields(items);
+  };
+
+  React.useEffect(() => {
+    updateFields(form.fields);
+  }, [form]);
+
   return (
     <>
-      {form.fields.map((field, index) => (
-        <FormField key={field.id} lang={form.lang} field={field} index={index} />
-      ))}
+      <DragDropContext onDragEnd={handleOnDragEnd}>
+        <Droppable droppableId="fields">
+          {(provided) => (
+            <div {...provided.droppableProps} ref={provided.innerRef}>
+              {fields.map((field, index) => {
+                return (
+                  <Draggable key={field.id} draggableId={field.id} index={index}>
+                    {(provided) => (
+                      <div className={styles.field} ref={provided.innerRef} {...provided.draggableProps}>
+                        <div {...provided.dragHandleProps} className={styles.dragButton}>
+                          <Icon name="dragIndicator" />
+                        </div>
+                        <FormField lang={form.lang} field={field} index={index} />
+                      </div>
+                    )}
+                  </Draggable>
+                );
+              })}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
       <button className={styles.addFieldButton} onClick={handleAddField}>
         <Icon name="add" size={28} />
       </button>
