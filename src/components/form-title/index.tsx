@@ -12,19 +12,16 @@ const FormTitle = ({ form }: { form: IForm }) => {
     if (!form) return;
     dispatch.forms.UPDATE({
       ...form,
-      title: {
-        en: form.lang === "en" ? event.target.value : form.title.en,
-        ru: form.lang === "ru" ? event.target.value : form.title.ru,
-      },
+      title: event.target.value,
     });
   };
 
   return (
     <div className={styles.formTitle}>
       <input
-        value={form.title[form.lang]}
+        value={form.title}
         type="text"
-        className={classNames(styles.formTitle__input, form.title[form.lang].trim() !== "" && styles.active)}
+        className={classNames(styles.formTitle__input, form.title.trim() !== "" && styles.active)}
         onChange={handleChangeTitle}
       />
     </div>

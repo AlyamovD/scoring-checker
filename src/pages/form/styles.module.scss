@@ -86,6 +86,14 @@
   gap: 20px 24px;
 }
 
+.preview {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  background: $color-grey-1;
+}
+
 .field {
   display: flex;
   flex-direction: column;
@@ -165,6 +173,7 @@
     top: calc(100% + 5px);
     left: 0;
     width: 100%;
+    z-index: 100;
   }
   &__dropdownItem {
     cursor: pointer;
@@ -186,7 +195,6 @@
     font-size: 0.75rem;
   }
 }
-
 
 .json {
   padding: 20px;

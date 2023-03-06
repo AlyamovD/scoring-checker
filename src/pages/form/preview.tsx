@@ -22,7 +22,7 @@ const FormPreview = () => {
 
   if (!form) return <></>;
   return (
-    <>
+    <div className={styles.preview}>
       <div className={classNames(styles.tools, styles.sticky)}>
         <LangSwitcher form={form} />
         <ColumnSwitcher form={form} />
@@ -54,7 +54,7 @@ const FormPreview = () => {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 
@@ -65,7 +65,7 @@ const Dropdown = ({ placeholder, list }: { placeholder: string; list: string[] }
   return (
     <div className={classNames(styles.field__dropdown, opened && styles.opened)}>
       <button className={styles.field__dropdownLabel} onClick={() => setOpened(!opened)}>
-        {placeholder !== "" && selected === "" && (
+        {selected === "" && (
           <span className={styles.field__dropdownInitText}>
             {placeholder !== "" ? placeholder : "Выбрать"}
           </span>

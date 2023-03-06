@@ -16,7 +16,7 @@ const FormJSON = () => {
   if (!form) return <></>;
 
   const json = {
-    title: form.title[form.lang],
+    title: form.title,
     type: "object",
     properties: form.fields.reduce(
       (prev, current) => ({

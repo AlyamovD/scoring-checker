@@ -27,7 +27,7 @@ const Home = () => {
             <button className={styles.card__deleteButton} onClick={(e) => handleDeleteForm(e, form.id)}>
               <Icon name="delete" size={20} />
             </button>
-            {form.title.ru}
+            {form.title}
           </Link>
         ))}
         <button className={styles.card} onClick={handleAddNewForm}>

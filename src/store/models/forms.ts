@@ -48,10 +48,7 @@ export interface IField {
 
 export interface IForm {
   id: string;
-  title: {
-    ru: string;
-    en: string;
-  };
+  title: string;
   lang: TLang;
   column_number: TColumnCount;
   fields: IField[];
@@ -93,10 +90,7 @@ const getNewEmptyField = (): IField => ({
 
 const getNewEmptyForm = (): IForm => ({
   id: uuid(),
-  title: {
-    ru: "Новая форма",
-    en: "New Form",
-  },
+  title: "",
   lang: "ru",
   column_number: 1,
   fields: [getNewEmptyField()],
