@@ -103,7 +103,7 @@ const FormFields = ({ form }: { form: IForm }) => {
   return (
     <>
       {form.fields.map((field, index) => (
-        <FormField key={field.id} form={form} field={field} index={index} />
+        <FormField key={field.id} lang={form.lang} field={field} index={index} />
       ))}
       <button className={styles.addFieldButton} onClick={handleAddField}>
         <Icon name="add" size={28} />
