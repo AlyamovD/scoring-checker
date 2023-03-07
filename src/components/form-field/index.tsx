@@ -267,7 +267,7 @@ const FormField = (props: { lang: TLang; field: IField; index: number }) => {
       <div className="flex column gap-15">
         <div className={styles.fieldShort__title}>
           {field.title[props.lang]}
-          {!field.required && <span>необязательный</span>}
+          {!field.required && <span>необязательный параметр</span>}
         </div>
         <div className={styles.fieldShort__tags}>
           <div className={styles.fieldShort__tag}>
