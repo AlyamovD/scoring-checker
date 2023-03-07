@@ -219,7 +219,7 @@ const FormField = (props: { lang: TLang; field: IField; index: number }) => {
                 <AnimatedInput
                   small
                   onChange={(e) => handleChangeOptionBdName(option.id, e)}
-                  placeholder="Значение в параметрах"
+                  placeholder="Значение параметра"
                 >
                   {option.bd_name}
                 </AnimatedInput>
@@ -267,7 +267,7 @@ const FormField = (props: { lang: TLang; field: IField; index: number }) => {
       <div className="flex column gap-15">
         <div className={styles.fieldShort__title}>
           {field.title[props.lang]}
-          {field.required && <span>обязательный</span>}
+          {!field.required && <span>необязательный</span>}
         </div>
         <div className={styles.fieldShort__tags}>
           <div className={styles.fieldShort__tag}>
