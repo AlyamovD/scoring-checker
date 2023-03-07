@@ -219,7 +219,7 @@ const FormField = (props: { lang: TLang; field: IField; index: number }) => {
                 <AnimatedInput
                   small
                   onChange={(e) => handleChangeOptionBdName(option.id, e)}
-                  placeholder="Значение в базе данных"
+                  placeholder="Значение в параметрах"
                 >
                   {option.bd_name}
                 </AnimatedInput>
