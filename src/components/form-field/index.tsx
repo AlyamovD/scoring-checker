@@ -179,7 +179,7 @@ const FormField = (props: { lang: TLang; field: IField; index: number }) => {
         <AnimatedInput onChange={handleChangeTitle} placeholder="Название поля">
           {field.title[props.lang]}
         </AnimatedInput>
-        <AnimatedInput onChange={handleChangeBdName} placeholder="Столбец в базе данных">
+        <AnimatedInput onChange={handleChangeBdName} placeholder="Параметр модели">
           {field.bd_name}
         </AnimatedInput>
         {fieldTypeIs("dropdown", "text_number", "text_float", "text_string") && (
@@ -276,7 +276,7 @@ const FormField = (props: { lang: TLang; field: IField; index: number }) => {
           </div>
           {field.bd_name !== "" && (
             <div className={styles.fieldShort__tag}>
-              <div className={styles.fieldShort__tagKey}>Столбец в базе данных:</div>
+              <div className={styles.fieldShort__tagKey}>Параметр модели:</div>
               <div className={styles.fieldShort__tagValue}>{field.bd_name}</div>
             </div>
           )}

@@ -93,7 +93,7 @@ const getNewEmptyForm = (): IForm => ({
   title: "New Form",
   lang: "ru",
   column_number: 1,
-  fields: [getNewEmptyField()],
+  fields: [],
 });
 
 const forms = createModel<IRootModel>()({
