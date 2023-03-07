@@ -118,7 +118,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    height: 48px;
+    min-height: 48px;
   }
   &__listItem {
     display: flex;

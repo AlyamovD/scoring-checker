@@ -106,10 +106,10 @@ const List = ({ list, type }: { list: string[]; type: "checkbox" | "radio" }) =>
 
   return (
     <div className={styles.field__list}>
-      {list.map((item) => (
+      {list.map((item, index) => (
         <button
           className={classNames(styles.field__listItem, selected.includes(item) && styles.active)}
-          key={item}
+          key={index}
           onClick={() => handleClick(item)}
         >
           {type === "checkbox" && (
