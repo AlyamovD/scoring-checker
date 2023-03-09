@@ -1,11 +1,7 @@
 import React, { Suspense } from "react";
 import { Navigate, useRoutes } from "react-router-dom";
+import { useDispatch } from "store/hooks";
 
-// const Home = React.lazy(() => import("pages/home"));
-// const FormLayout = React.lazy(() => import("pages/form/layout"));
-// const FormConstructor = React.lazy(() => import("pages/form/constructor"));
-// const FormPreview = React.lazy(() => import("pages/form/preview"));
-// const FormJSON = React.lazy(() => import("pages/form/json"));
 import Home from "pages/home";
 import FormLayout from "pages/form/layout";
 import FormConstructor from "pages/form/constructor";
@@ -13,6 +9,8 @@ import FormPreview from "pages/form/preview";
 import FormJSON from "pages/form/json";
 
 const Routes: React.FC = (): JSX.Element => {
+  const dispatch = useDispatch();
+
   const routes = useRoutes([
     {
       path: "/",
@@ -41,6 +39,11 @@ const Routes: React.FC = (): JSX.Element => {
       element: <Navigate to="/" />,
     },
   ]);
+
+  React.useEffect(() => {
+    dispatch.forms.FETCH_GET_ALL_FORMS();
+  }, [dispatch]);
+
   return <Suspense fallback={<>Загрузка...</>}>{routes}</Suspense>;
 };
 

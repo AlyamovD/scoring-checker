@@ -1,6 +1,7 @@
 import { createModel } from "@rematch/core";
 import { IRootModel } from ".";
 import { v4 as uuid } from "uuid";
+import request from "request";
 
 export type TFiledType =
   | "text_float"
@@ -88,8 +89,8 @@ const getNewEmptyField = (): IField => ({
   ],
 });
 
-const getNewEmptyForm = (): IForm => ({
-  id: uuid(),
+const getNewEmptyForm = (id: string): IForm => ({
+  id,
   title: "New Form",
   lang: "ru",
   column_number: 1,
@@ -100,13 +101,14 @@ const forms = createModel<IRootModel>()({
   state: [] as IForm[],
   reducers: {
     INSERT: (state, newform: IForm) => [...state, newform],
+    INIT: (_, payload) => payload,
     UPDATE: (state, updatedform: IForm | undefined) =>
       state.map((form) => (form.id === updatedform?.id ? updatedform : form)),
     DELETE: (state, id: string) => state.filter((form) => form.id !== id),
     RESET: () => [],
     DELETE_FIELD: (state, id) =>
       state.map((form) => ({ ...form, fields: form.fields.filter((field) => field.id !== id) })),
-    OPEN_FIELD: (state, id) => 
+    OPEN_FIELD: (state, id) =>
       state.map((form) => ({
         ...form,
         fields: form.fields.map((field) => ({
@@ -153,10 +155,35 @@ const forms = createModel<IRootModel>()({
       })),
   },
   effects: (dispatch) => ({
-    async CREATE() {
-      const form = getNewEmptyForm();
+    async FETCH_CREATE_FORM() {
+      const response = await request.post("http://192.168.1.32:5000/forms", {
+        name: "New Form",
+      });
+      const responseData = await response.data;
+      const form = getNewEmptyForm(responseData.id);
       dispatch.forms.INSERT(form);
       return form;
+    },
+    async FETCH_GET_ALL_FORMS() {
+      const response = await request.get("http://192.168.1.32:5000/forms");
+      const responseData = await response.data;
+      dispatch.forms.INIT(
+        responseData.forms.map((form: any) => {
+          if (form.template === null) return getNewEmptyForm(form.id);
+          else return JSON.parse(form.template);
+        })
+      );
+    },
+    async FETCH_DELETE_FORM(id: string) {
+      const response = await request.del("http://192.168.1.32:5000/forms/" + id);
+      if (response.status === 200) dispatch.forms.DELETE(id);
+      else console.log("Удаление не удалось");
+    },
+    async FETCH_UPDATE_FORM(form: IForm) {
+      await request.put("http://192.168.1.32:5000/forms/" + form.id, {
+        name: form.title,
+        template: JSON.stringify(form),
+      });
     },
   }),
 });

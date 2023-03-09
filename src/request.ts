@@ -8,6 +8,7 @@ const instance = axios.create({
   baseURL,
   headers: {
     "Content-Type": "application/json",
+    "ZF-Api-Key": "f05ac327-41db-46e1-99f4-7bb429b4e459",
   },
 });
 
@@ -28,12 +29,14 @@ instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 
 const get = async (url: string) => instance.get(url);
 const post = (url: string, body?: any) => instance.post(url, body);
-const del = (url: string, body?: any) => instance.delete(url, { data: body });
+const put = (url: string, body?: any) => instance.put(url, body);
+const del = (url: string) => instance.delete(url);
 
 export const axiosInstance = instance;
 const request = {
   get,
   post,
+  put,
   del,
 };
 

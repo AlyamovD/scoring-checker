@@ -10,13 +10,13 @@ const Home = () => {
   const navigate = useNavigate();
 
   const handleAddNewForm = async () => {
-    let form = await dispatch.forms.CREATE();
+    let form = await dispatch.forms.FETCH_CREATE_FORM();
     navigate(`/form/${form.id}/constructor`);
   };
 
   const handleDeleteForm = (e: React.MouseEvent, id: string) => {
     e.preventDefault();
-    dispatch.forms.DELETE(id);
+    dispatch.forms.FETCH_DELETE_FORM(id);
   };
 
   return (
