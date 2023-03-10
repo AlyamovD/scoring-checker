@@ -156,7 +156,7 @@ const forms = createModel<IRootModel>()({
   },
   effects: (dispatch) => ({
     async FETCH_CREATE_FORM() {
-      const response = await request.post("http://192.168.1.32:5000/forms", {
+      const response = await request.post("/forms", {
         name: "New Form",
       });
       const responseData = await response.data;
@@ -165,7 +165,7 @@ const forms = createModel<IRootModel>()({
       return form;
     },
     async FETCH_GET_ALL_FORMS() {
-      const response = await request.get("http://192.168.1.32:5000/forms");
+      const response = await request.get("/forms");
       const responseData = await response.data;
       dispatch.forms.INIT(
         responseData.forms.map((form: any) => {
@@ -175,12 +175,12 @@ const forms = createModel<IRootModel>()({
       );
     },
     async FETCH_DELETE_FORM(id: string) {
-      const response = await request.del("http://192.168.1.32:5000/forms/" + id);
+      const response = await request.del("/forms/" + id);
       if (response.status === 200) dispatch.forms.DELETE(id);
       else console.log("Удаление не удалось");
     },
     async FETCH_UPDATE_FORM(form: IForm) {
-      await request.put("http://192.168.1.32:5000/forms/" + form.id, {
+      await request.put("/forms/" + form.id, {
         name: form.title,
         template: JSON.stringify(form),
       });
