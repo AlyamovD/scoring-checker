@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/scoring-checker/static/css/main.a33eea5d.css",
+    "main.css": "/scoring-checker/static/css/main.a27143a6.css",
     "main.js": "/scoring-checker/static/js/main.dcac7e91.js",
     "index.html": "/scoring-checker/index.html",
-    "main.a33eea5d.css.map": "/scoring-checker/static/css/main.a33eea5d.css.map",
+    "main.a27143a6.css.map": "/scoring-checker/static/css/main.a27143a6.css.map",
     "main.dcac7e91.js.map": "/scoring-checker/static/js/main.dcac7e91.js.map"
   },
   "entrypoints": [
-    "static/css/main.a33eea5d.css",
+    "static/css/main.a27143a6.css",
     "static/js/main.dcac7e91.js"
   ]
 }
