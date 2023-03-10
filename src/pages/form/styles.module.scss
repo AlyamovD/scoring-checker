@@ -97,6 +97,7 @@
 .field {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 5px;
   &__title {
     font-size: $color-grey-4;
