@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/scoring-checker/static/css/main.a27143a6.css",
-    "main.js": "/scoring-checker/static/js/main.dcac7e91.js",
+    "main.css": "/scoring-checker/static/css/main.7dd0e1f3.css",
+    "main.js": "/scoring-checker/static/js/main.de10c798.js",
     "index.html": "/scoring-checker/index.html",
-    "main.a27143a6.css.map": "/scoring-checker/static/css/main.a27143a6.css.map",
-    "main.dcac7e91.js.map": "/scoring-checker/static/js/main.dcac7e91.js.map"
+    "main.7dd0e1f3.css.map": "/scoring-checker/static/css/main.7dd0e1f3.css.map",
+    "main.de10c798.js.map": "/scoring-checker/static/js/main.de10c798.js.map"
   },
   "entrypoints": [
-    "static/css/main.a27143a6.css",
-    "static/js/main.dcac7e91.js"
+    "static/css/main.7dd0e1f3.css",
+    "static/js/main.de10c798.js"
   ]
 }
