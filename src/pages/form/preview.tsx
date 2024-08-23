@@ -1,56 +1,54 @@
 import React from "react";
 import classNames from "classnames";
-import { useParams } from "react-router-dom";
 
 import LangSwitcher from "components/lang-switcher";
 import ColumnSwitcher from "components/column-switcher";
 import Icon from "icon";
 import { useSelector } from "store/hooks";
-import { IForm } from "store/models/forms";
 import styles from "./styles.module.scss";
 
 const FormPreview = () => {
-  const { id } = useParams();
   const forms = useSelector((state) => state.forms);
 
-  const [form, setForm] = React.useState<IForm | undefined>(undefined);
-
-  React.useEffect(() => {
-    if (!id) return;
-    setForm(forms.find((f) => f.id === id));
-  }, [forms, id]);
-
-  if (!form) return <></>;
+  if (!forms[0]) return <></>;
   return (
     <div className={styles.preview}>
       <div className={classNames(styles.tools, styles.sticky)}>
-        <LangSwitcher form={form} />
-        <ColumnSwitcher form={form} />
+        <LangSwitcher form={forms[0]} />
+        <ColumnSwitcher form={forms[0]} />
       </div>
-      <div className={form.column_number === 2 ? styles.grid2 : styles.flex}>
-        {form.fields.map((field) => (
+      <div className={forms[0].column_number === 2 ? styles.grid2 : styles.flex}>
+        {forms[0].fields.map((field) => (
           <div className={styles.field} key={field.id}>
-            <div className={styles.field__title}>{field.title[form.lang]}</div>
+            <div className={styles.field__title}>{field.title[forms[0].lang]}</div>
             {field.type === "dropdown" && (
               <Dropdown
-                list={field.options.map((option) => option.title[form.lang])}
-                placeholder={field.placeholder[form.lang]}
+                list={field.options.map((option) => option.title[forms[0].lang])}
+                placeholder={field.placeholder[forms[0].lang]}
               />
             )}
             {field.type === "one_of_list" && (
-              <List type="radio" list={field.options.map((option) => option.title[form.lang])} />
+              <List
+                type="radio"
+                list={field.options.map((option) => option.title[forms[0].lang])}
+              />
             )}
             {field.type === "several_of_list" && (
-              <List type="checkbox" list={field.options.map((option) => option.title[form.lang])} />
+              <List
+                type="checkbox"
+                list={field.options.map((option) => option.title[forms[0].lang])}
+              />
             )}
             {field.type === "text_string" && (
-              <Input type="string" placeholder={field.placeholder[form.lang]} />
+              <Input type="string" placeholder={field.placeholder[forms[0].lang]} />
             )}
             {field.type === "text_number" && (
-              <Input type="number" placeholder={field.placeholder[form.lang]} />
+              <Input type="number" placeholder={field.placeholder[forms[0].lang]} />
             )}
-            {field.type === "text_float" && <Input type="float" placeholder={field.placeholder[form.lang]} />}
-            <div className={styles.field__description}>{field.description[form.lang]}</div>
+            {field.type === "text_float" && (
+              <Input type="float" placeholder={field.placeholder[forms[0].lang]} />
+            )}
+            <div className={styles.field__description}>{field.description[forms[0].lang]}</div>
           </div>
         ))}
       </div>
@@ -125,7 +123,13 @@ const List = ({ list, type }: { list: string[]; type: "checkbox" | "radio" }) =>
   );
 };
 
-const Input = ({ placeholder, type }: { placeholder: string; type: "number" | "float" | "string" }) => {
+const Input = ({
+  placeholder,
+  type
+}: {
+  placeholder: string;
+  type: "number" | "float" | "string";
+}) => {
   const [value, setValue] = React.useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -142,7 +146,12 @@ const Input = ({ placeholder, type }: { placeholder: string; type: "number" | "f
   };
 
   return (
-    <input value={value} className={styles.field__input} onChange={handleChange} placeholder={placeholder} />
+    <input
+      value={value}
+      className={styles.field__input}
+      onChange={handleChange}
+      placeholder={placeholder}
+    />
   );
 };
 

@@ -14,30 +14,30 @@ const Routes: React.FC = (): JSX.Element => {
   const routes = useRoutes([
     {
       path: "/",
-      element: <Home />,
+      element: <Home />
     },
     {
       path: "/form",
       element: <FormLayout />,
       children: [
         {
-          path: "/form/:id/constructor",
-          element: <FormConstructor />,
+          path: "/form/constructor",
+          element: <FormConstructor />
         },
         {
-          path: "/form/:id/preview",
-          element: <FormPreview />,
+          path: "/form/preview",
+          element: <FormPreview />
         },
         {
-          path: "/form/:id/json",
-          element: <FormJSON />,
-        },
-      ],
+          path: "/form/json",
+          element: <FormJSON />
+        }
+      ]
     },
     {
       path: "*",
-      element: <Navigate to="/" />,
-    },
+      element: <Navigate to="/" />
+    }
   ]);
 
   React.useEffect(() => {

@@ -61,12 +61,12 @@ const getNewEmptyField = (): IField => ({
   type: "text_string",
   title: {
     ru: "",
-    en: "",
+    en: ""
   },
   bd_name: "",
   placeholder: {
     ru: "",
-    en: "",
+    en: ""
   },
   required: false,
   symbol_limit: "",
@@ -74,7 +74,7 @@ const getNewEmptyField = (): IField => ({
   max_value: "",
   description: {
     ru: "",
-    en: "",
+    en: ""
   },
   options: [
     {
@@ -82,11 +82,11 @@ const getNewEmptyField = (): IField => ({
       bd_name: "",
       title: {
         ru: "",
-        en: "",
+        en: ""
       },
-      initial: true,
-    },
-  ],
+      initial: true
+    }
+  ]
 });
 
 const getNewEmptyForm = (id: string): IForm => ({
@@ -94,14 +94,14 @@ const getNewEmptyForm = (id: string): IForm => ({
   title: "New Form",
   lang: "ru",
   column_number: 1,
-  fields: [],
+  fields: []
 });
 
 const forms = createModel<IRootModel>()({
   state: [] as IForm[],
   reducers: {
     INSERT: (state, newform: IForm) => [...state, newform],
-    INIT: (_, payload) => payload,
+    INIT: (_, payload: IForm[]) => payload,
     UPDATE: (state, updatedform: IForm | undefined) =>
       state.map((form) => (form.id === updatedform?.id ? updatedform : form)),
     DELETE: (state, id: string) => state.filter((form) => form.id !== id),
@@ -113,24 +113,24 @@ const forms = createModel<IRootModel>()({
         ...form,
         fields: form.fields.map((field) => ({
           ...field,
-          opened: field.id === id ? true : false,
-        })),
+          opened: field.id === id ? true : false
+        }))
       })),
     CLOSE_FIELD: (state, id) =>
       state.map((form) => ({
         ...form,
         fields: form.fields.map((field) => ({
           ...field,
-          opened: field.id === id ? false : field.opened,
-        })),
+          opened: field.id === id ? false : field.opened
+        }))
       })),
     CLOSE_ALL_FIELDS: (state) =>
       state.map((form) => ({
         ...form,
         fields: form.fields.map((field) => ({
           ...field,
-          opened: false,
-        })),
+          opened: false
+        }))
       })),
     INSERT_FIELD: (state, formId) =>
       state.map((form) => ({
@@ -138,7 +138,7 @@ const forms = createModel<IRootModel>()({
         fields:
           form.id === formId
             ? [...form.fields.map((field) => ({ ...field, opened: false })), getNewEmptyField()]
-            : form.fields,
+            : form.fields
       })),
     INSERT_EXIST_FIELD: (state, formId, field) =>
       state.map((form) => ({
@@ -146,18 +146,18 @@ const forms = createModel<IRootModel>()({
         fields:
           form.id === formId
             ? [...form.fields.map((field) => ({ ...field, opened: false })), field]
-            : form.fields,
+            : form.fields
       })),
     UPDATE_FIELD: (state, updatedfield: IField | undefined) =>
       state.map((form) => ({
         ...form,
-        fields: form.fields.map((field) => (field.id === updatedfield?.id ? updatedfield : field)),
-      })),
+        fields: form.fields.map((field) => (field.id === updatedfield?.id ? updatedfield : field))
+      }))
   },
   effects: (dispatch) => ({
     async FETCH_CREATE_FORM() {
       const response = await request.post("/forms", {
-        name: "New Form",
+        name: "New Form"
       });
       const responseData = await response.data;
       const form = getNewEmptyForm(responseData.id);
@@ -165,14 +165,7 @@ const forms = createModel<IRootModel>()({
       return form;
     },
     async FETCH_GET_ALL_FORMS() {
-      const response = await request.get("/forms");
-      const responseData = await response.data;
-      dispatch.forms.INIT(
-        responseData.forms.map((form: any) => {
-          if (form.template === null) return getNewEmptyForm(form.id);
-          else return JSON.parse(form.template);
-        })
-      );
+      dispatch.forms.INIT([getNewEmptyForm("1")]);
     },
     async FETCH_DELETE_FORM(id: string) {
       const response = await request.del("/forms/" + id);
@@ -182,10 +175,10 @@ const forms = createModel<IRootModel>()({
     async FETCH_UPDATE_FORM(form: IForm) {
       await request.put("/forms/" + form.id, {
         name: form.title,
-        template: JSON.stringify(form),
+        template: JSON.stringify(form)
       });
-    },
-  }),
+    }
+  })
 });
 
 export default forms;

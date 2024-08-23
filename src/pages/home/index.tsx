@@ -10,8 +10,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const handleAddNewForm = async () => {
-    let form = await dispatch.forms.FETCH_CREATE_FORM();
-    navigate(`/form/${form.id}/constructor`);
+    navigate(`/form/constructor`);
   };
 
   const handleDeleteForm = (e: React.MouseEvent, id: string) => {
@@ -22,9 +21,12 @@ const Home = () => {
   return (
     <div className={styles.home}>
       <div className={styles.container}>
-        {forms.map((form) => (
-          <Link to={`/form/${form.id}/constructor`} className={styles.card} key={form.id}>
-            <button className={styles.card__deleteButton} onClick={(e) => handleDeleteForm(e, form.id)}>
+        {forms?.map((form) => (
+          <Link to={`/form/constructor`} className={styles.card} key={form.id}>
+            <button
+              className={styles.card__deleteButton}
+              onClick={(e) => handleDeleteForm(e, form.id)}
+            >
               <Icon name="delete" size={20} />
             </button>
             {form.title}
